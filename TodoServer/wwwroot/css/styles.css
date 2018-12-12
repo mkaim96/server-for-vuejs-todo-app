@@ -1,0 +1,59 @@
+﻿body {
+    font-family: 'Avenir';
+    background: #11998e; 
+    background: -webkit-linear-gradient(to right, #38ef7d, #11998e); 
+    background: linear-gradient(to right, #38ef7d, #11998e); 
+}
+
+.box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    max-width: 380px;
+    padding: 30px;
+    border-radius: 5px;
+    height:380px;
+    margin: 40px auto 0 auto;
+    background: #fff;
+}
+
+.input-field, .button {
+    background: #ECF0F1;
+    display: block;
+    margin-bottom: 20px;
+    border: 1px solid darkgray;
+    border-radius: 5px;
+    width: 280px;
+    height: 40px;
+    padding: 10px;
+    box-sizing: border-box;
+}
+
+.button {
+    background: #3F88C5;
+    color: #fff;
+    font-size: 18px;
+}
+
+.button:hover {
+    cursor: pointer;
+}
+
+.header {
+    color: #34495E;
+    font-size: 28px;
+}
+
+a {
+    color: #3F88C5;
+}
+
+.validation-summary-errors {
+    color: #D00000;
+}
+
+.validation-summary-errors ul {
+    list-style: none;
+}
+
+

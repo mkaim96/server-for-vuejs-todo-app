@@ -1,0 +1,19 @@
+﻿@model TodoServer.Models.Account.LoginViewModel
+
+<div class="box">
+
+    <h2 class="header">Zaloguj się</h2>
+
+    <form asp-route-returnUrl="@ViewData["ReturnUrl"]" asp-action="Login" asp-controller="Account" method="post">
+        <div asp-validation-summary="All"></div>
+
+        <input asp-for="Email" class="input-field" placeholder="Email" />
+
+        <input asp-for="Password" class="input-field" placeholder="Hasło" />
+
+        <button type="submit" class="button">Zaloguj się</button>
+    </form>
+
+    <a asp-action="Register" asp-controller="Account">Nie masz konta? Zarejestruj się.</a>
+
+</div>
