@@ -14,7 +14,7 @@ namespace TodoServer.Controllers
     {
         public IActionResult Index()
         {
-            return Content(LoadHTMLPage("Views/app/index"));
+            return Content(LoadHTMLPage("Views/TodoApp/index"), "text/html");
         }
 
 

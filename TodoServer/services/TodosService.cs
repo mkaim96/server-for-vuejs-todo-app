@@ -65,6 +65,11 @@ namespace TodoServer.services
         public int ToggleCompleted(int todoId)
         {
             var todo = _context.Todos.FirstOrDefault(x => x.Id == todoId);
+
+            if (todo == null)
+            {
+                return 0;
+            }
             _context.Update(todo);
 
             todo.Completed = !todo.Completed;

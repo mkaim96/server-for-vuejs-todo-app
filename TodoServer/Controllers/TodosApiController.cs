@@ -19,24 +19,27 @@ namespace TodoServer.Controllers
         private TodosService _todosService;
         private UserManager<ApplicationUser> _userManager;
         private ApplicationDbContext _context;
+        private SignInManager<ApplicationUser> _signInManager;
 
         // for testing
-        private string UserId = "99424be2-88ed-4bc8-9c8e-99901001edc8";
+        //private string UserId = "99424be2-88ed-4bc8-9c8e-99901001edc8";
 
         public TodosApiController(
             TodosService todosService,
             UserManager<ApplicationUser> userManager,
-            ApplicationDbContext context)
+            ApplicationDbContext context,
+            SignInManager<ApplicationUser> signInManager)
         {
             _todosService = todosService;
             _userManager = userManager;
             _context = context;
+            _signInManager = signInManager;
         }
 
         [Route("api/todos/get-all")]
         public IActionResult GetAll()
         {
-            var todos = _todosService.GetAll(UserId);
+            var todos = _todosService.GetAll(UserId());
             var response = todos.Select(x => new
             {
                 id = x.Id,
@@ -48,7 +51,7 @@ namespace TodoServer.Controllers
 
         [Route("api/todos/create")]
         [HttpPost]
-        public IActionResult Create([FromBody] CreateTodoModel model)
+        public async Task<IActionResult> Create([FromBody] CreateTodoModel model)
         {
             if (ModelState.IsValid)
             {
@@ -56,7 +59,8 @@ namespace TodoServer.Controllers
                 {
                     Completed = false,
                     Text = model.Text,
-                    User = (ApplicationUser)_context.Users.FirstOrDefault(x => x.Id == UserId)
+                    User = await _userManager.GetUserAsync(User)
+                    //(ApplicationUser)_context.Users.FirstOrDefault(x => x.Id == UserId())
                 };
 
                 var result = _todosService.Create(todo);
@@ -108,14 +112,28 @@ namespace TodoServer.Controllers
         [HttpGet]
         public IActionResult ToggleCompleted([FromRoute] int todoId)
         {
-            _todosService.ToggleCompleted(todoId);
+            var result = _todosService.ToggleCompleted(todoId);
+
+            if (result == 0)
+            {
+                return NotFound();
+            }
+
             return Ok();
+        }
+
+        [Route("/logout")]
+        [HttpGet]
+        public async Task<IActionResult> Logout()
+        {
+            await _signInManager.SignOutAsync();
+            return RedirectToAction("Index", "Home");
         }
 
 
         #region helpers
 
-        private string CurrentUserId()
+        private string UserId()
         {
             return _userManager.GetUserId(HttpContext.User);
         }
