@@ -13,7 +13,6 @@ using TodoServer.services;
 
 namespace TodoServer.Controllers
 {
-    [EnableCors("AllowAnyOrigin")]
     public class TodosApiController : Controller
     {
         private TodosService _todosService;

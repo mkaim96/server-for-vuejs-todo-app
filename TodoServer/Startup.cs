@@ -45,15 +45,6 @@ namespace TodoServer
 
             services.AddTransient<TodosService>();
 
-            services.AddCors(options => {
-                options.AddPolicy("AllowAnyOrigin", builder =>
-                {
-                    builder.AllowAnyOrigin()
-                        .AllowAnyMethod()
-                        .AllowAnyHeader();
-                });
-            });
-
             services.AddMvc();
         }
 
